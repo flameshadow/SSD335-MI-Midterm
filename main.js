@@ -198,7 +198,6 @@ function sceneSetup() {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFShadowMap;
 
-  //  renderer.setClearColor(0x000033,0);
     document.body.appendChild(renderer.domElement);
 
     camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
@@ -233,57 +232,9 @@ function sceneSetup() {
 
     scene.add(camera);
     camera.lookAt(scene.position);
-    scene.background = new THREE.Color(0);
-    texture = new THREE.TextureLoader().load("mogball.png");
-    texture.repeat.set(0.1, 0.1);
-    texture.wrapS = texture.wrapT = THREE.MirroredRepeatWrapping;
 
     var loader = new THREE.FontLoader();
-    loader.load('Mystery_Quest.json', function (font) {
-/*
-        var material = new THREE.MeshPhongMaterial({
-            color: 0x9421CE
-        });
-*/
-        /*
-        var material = new THREE.MeshPhongMaterial( {
-            color: 0x2194CE,
-            emissive:0x000000,
-            specular:0x111111,
-
-            shininess: 30,
-            shading: THREE.SmoothShading
-        });
-        */
-        /*
-        var textGeom = new THREE.TextGeometry('COUNTDOWN', {
-            font: font
-        });
-
-        textMesh = new THREE.Mesh(textGeom, material);
-        textMesh.castShadow = true;
-        textMesh.receiveShadow = true;
-        textGeom.computeBoundingBox();
-        textGeom.textWidth = textGeom.boundingBox.max.x - textGeom.boundingBox.min.x;
-        textGeom.textHeight = textGeom.boundingBox.max.y - textGeom.boundingBox.min.y;
-        textGeom.textLength = textGeom.boundingBox.max.z - textGeom.boundingBox.min.z;
-        assignUVs(textGeom);
-        textMesh.geometry.translate(-(textGeom.textWidth / 2), -(textGeom.textHeight / 2), -(textGeom.textLength / 2));
-        textMesh.scale.set(0.5, 0.5, 0.25);
-        textMesh.position.set(0, 0, 100);
-        scene.add(textMesh);
-        */
-
-        for (var i=0; i<10; i++)
-        {
-            var letter = POSSIBLE_LETTERS.charAt(Math.floor(Math.random() * POSSIBLE_LETTERS.length));
-            textMesh = createGlyph(font, letter);
-            textMesh.position.set(Math.cos(i*Math.PI*2/10)*200, Math.sin(i*Math.PI*2/10)*200, 100);
-
-            scene.add(textMesh);
-            clickableObjects.push(textMesh);
-            collidableObjects.push(textMesh);
-        }
+    loader.load('assets/Mystery_Quest_Regular.json', function (font) {
     });
 
 }
@@ -311,12 +262,13 @@ function createGlyph(font, letter) {
 }
 function initialDraw() {
  //   scene.add(new THREE.AxisHelper(500));
-    var map = new THREE.TextureLoader().load("Countdown.png");
+    var map = new THREE.TextureLoader().load("assets/marble_floor.jpg");
 
     var floor = new THREE.Mesh(
         new THREE.PlaneGeometry(1000, 1000, 1000),
         new THREE.MeshPhongMaterial({
             side:THREE.DoubleSide,
+//            color:0x808080
             map:map
         }));
     floor.receiveShadow = true;
